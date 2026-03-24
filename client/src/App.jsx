@@ -10,17 +10,10 @@ import CreateEvent from './pages/CreateEvent';
 import Notifications from './pages/Notifications';
 import Profile from './pages/Profile';
 
-// Admin layout and pages
-import AdminLayout from './components/layout/AdminLayout';
-import AdminLogin from './pages/AdminLogin';
-import AdminDashboard from './pages/AdminDashboard';
-import AdminNotices from './pages/AdminNotices';
-import CreateNotice from './pages/CreateNotice';
-
 export default function App() {
   return (
-    <Routes>
-      <Route element={<Layout />}>
+    <Layout>
+      <Routes>
         <Route path="/" element={<Dashboard />} />
         <Route path="/notices" element={<Notices />} />
         <Route path="/events" element={<Events />} />
