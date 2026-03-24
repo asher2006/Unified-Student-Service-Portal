@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { getEvents, registerEvent, deleteEvent } from '../services/eventService';
+import { api } from '../services/api';
 import EventCard from '../components/EventCard';
 
 export default function Events() {
@@ -14,7 +14,7 @@ export default function Events() {
 
   const fetchEvents = async () => {
     try {
-      const res = await getEvents();
+      const res = await api.getEvents();
       if (res?.success) {
         setEvents(res.data);
       }
@@ -27,7 +27,7 @@ export default function Events() {
 
   const handleRegister = async (eventId) => {
     try {
-      const res = await registerEvent(eventId, currentUserId);
+      const res = await api.registerEvent(eventId, currentUserId);
       if (res?.success) {
         setEvents(events.map(ev => {
           if (ev.id === eventId) {
@@ -49,7 +49,7 @@ export default function Events() {
   const handleDelete = async (eventId) => {
     if (!window.confirm("Are you sure you want to delete this event?")) return;
     try {
-      const res = await deleteEvent(eventId);
+      const res = await api.deleteEvent(eventId);
       if (res?.success) {
         setEvents(events.filter(ev => ev.id !== eventId));
       } else {
