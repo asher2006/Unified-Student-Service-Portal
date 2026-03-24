@@ -1,3 +1,5 @@
+// client/src/services/eventService.js
+// Thin wrapper — delegates to api.js (which now uses Firestore).
 import { api } from './api';
 
 const getEvents = () => api.getEvents();

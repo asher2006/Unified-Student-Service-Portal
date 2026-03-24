@@ -1,33 +1,35 @@
-const BASE_URL = '/api/users';
-
-async function fetchAPI(endpoint, options = {}) {
-  try {
-    const res = await fetch(`${BASE_URL}${endpoint}`, {
-      ...options,
-      headers: {
-        'Content-Type': 'application/json',
-        ...options.headers,
-      },
-    });
-    return await res.json();
-  } catch (error) {
-    console.error('User API Error:', error);
-    return { success: false, message: 'Network error or server down' };
-  }
-}
+// client/src/services/userService.js
+// Notifications are read from Firestore; read-state lives in localStorage.
+import { collection, getDocs, query, orderBy } from 'firebase/firestore';
+import { db } from '../firebase';
 
 export const userService = {
   getNotifications: async () => {
-    const res = await fetchAPI('/notifications');
-    if (res.success && res.data) {
+    try {
+      const q = query(collection(db, 'notifications'), orderBy('createdAt', 'desc'));
+      const snap = await getDocs(q);
       const readIds = JSON.parse(localStorage.getItem('read_notifications') || '[]');
-      res.data = res.data.map(n => ({
-        ...n,
-        read: n.read || readIds.includes(String(n.id))
-      }));
+
+      const data = snap.docs.map(doc => {
+        const d = doc.data();
+        return {
+          id: doc.id,
+          type: d.type || 'system',
+          title: d.title || '',
+          message: d.message || '',
+          link: d.link || '/dashboard',
+          timestamp: d.createdAt?.toDate?.()?.toISOString() || new Date().toISOString(),
+          read: readIds.includes(doc.id),
+        };
+      });
+
+      return { success: true, data };
+    } catch (e) {
+      console.error('getNotifications error:', e);
+      return { success: false, data: [] };
     }
-    return res;
   },
+
   markNotificationRead: (id) => {
     const readIds = JSON.parse(localStorage.getItem('read_notifications') || '[]');
     if (!readIds.includes(String(id))) {
@@ -36,6 +38,7 @@ export const userService = {
     }
     return { success: true };
   },
+
   markAllNotificationsRead: (notifications = []) => {
     const ids = notifications.map(n => String(n.id));
     const existing = JSON.parse(localStorage.getItem('read_notifications') || '[]');

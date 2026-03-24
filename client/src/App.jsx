@@ -8,6 +8,7 @@ import Notices from './pages/Notices';
 import Events from './pages/Events';
 import CreateEvent from './pages/CreateEvent';
 import Notifications from './pages/Notifications';
+import SeedDatabase from './pages/SeedDatabase';
 
 // Admin layout and pages
 import AdminLayout from './components/layout/AdminLayout';
@@ -30,7 +31,7 @@ export default function App() {
         <Route path="/events" element={<Events />} />
         <Route path="/events/create" element={<CreateEvent />} />
         <Route path="/notifications" element={<Notifications />} />
-        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/seed" element={<SeedDatabase />} />
 
         <Route path="*" element={
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', height: '60vh', fontFamily: 'var(--font-display)', gap: 8 }}>

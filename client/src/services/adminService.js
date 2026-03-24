@@ -1,17 +1,20 @@
-const BASE_URL = '/api';
+// Admin auth is client-side only — no backend needed.
+// Password is checked locally and the admin flag is stored in localStorage.
+const ADMIN_PASSWORD = 'admin123';
 
 export const adminService = {
   login: async (password) => {
-    try {
-      const res = await fetch(`${BASE_URL}/admin/login`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ password }),
-      });
-      return await res.json();
-    } catch (err) {
-      console.error('Login error', err);
-      return { success: false, message: 'Network error' };
+    // Simple client-side password check — replace with Firebase Auth in production
+    if (password === ADMIN_PASSWORD) {
+      return { success: true };
     }
-  }
+    return { success: false, message: 'Invalid password' };
+  },
+  logout: () => {
+    localStorage.removeItem('isAdmin');
+    return { success: true };
+  },
+  isAdmin: () => {
+    return localStorage.getItem('isAdmin') === 'true';
+  },
 };
