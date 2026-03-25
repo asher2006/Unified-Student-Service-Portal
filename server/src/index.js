@@ -5,12 +5,16 @@ import noticesRouter from './routes/notices.js'
 import eventsRouter from './routes/events.js'
 import authRouter from './routes/auth.js'
 import usersRouter from './routes/users.js'
+import adminRouter from './routes/admin.js'
 
 const app = new Hono()
 
 // ── Middleware ──────────────────────────────────────────────────────────────
 app.use('*', cors({
-  origin: 'http://localhost:5173',
+  origin: [
+    'http://localhost:5173',
+    'https://frcrce-fsd.vercel.app',
+  ],
   credentials: true,
 }))
 
@@ -19,6 +23,7 @@ app.route('/api/notices', noticesRouter)
 app.route('/api/events', eventsRouter)
 app.route('/api/auth', authRouter)
 app.route('/api/users', usersRouter)
+app.route('/api/admin', adminRouter)
 
 // ── Health Check ─────────────────────────────────────────────────────────────
 app.get('/api/health', (c) => {

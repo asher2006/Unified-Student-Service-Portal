@@ -15,9 +15,7 @@ export default function Events() {
   // Use the ID from Redux instead of hardcoding
   const currentUserId = user?.id;
 
-  useEffect(() => {
-    fetchEvents();
-  }, []);
+  useEffect(() => { fetchEvents(); }, []);
 
   const fetchEvents = async () => {
     try {
