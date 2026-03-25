@@ -23,12 +23,12 @@ export default function CreateEvent() {
   const handleCancel = () => navigate('/admin/events');
 
   return (
-    <div style={{ maxWidth: 720, display: 'flex', flexDirection: 'column', gap: 32, fontFamily: 'var(--font-ui)' }}>
+    <div style={{ maxWidth: 680, display: 'flex', flexDirection: 'column', gap: 32, fontFamily: 'var(--font-ui)' }}>
 
       {/* Header */}
       <header style={{ borderBottom: '3px solid var(--border-dark)', paddingBottom: 24 }}>
         <div className="editorial-label-accent" style={{ marginBottom: 8 }}>
-          Events · Create
+          Admin · Events · Create
         </div>
         <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(26px, 4vw, 40px)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1.05, letterSpacing: '-0.03em' }}>
           Publish New Event
@@ -39,7 +39,7 @@ export default function CreateEvent() {
       </header>
 
       {/* Form */}
-      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '32px' }}>
+      <div style={{ background: 'var(--bg-card)', border: '1px solid var(--border)', padding: '28px 32px' }}>
         <EventForm onSubmit={handleCreate} onCancel={handleCancel} />
       </div>
     </div>

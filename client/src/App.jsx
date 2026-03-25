@@ -16,6 +16,7 @@ import AdminLogin from './pages/AdminLogin';
 import AdminDashboard from './pages/AdminDashboard';
 import AdminNotices from './pages/AdminNotices';
 import AdminEvents from './pages/AdminEvents';
+import AdminSeed from './pages/AdminSeed';
 import CreateNotice from './pages/CreateNotice';
 
 export default function App() {
@@ -50,6 +51,7 @@ export default function App() {
         <Route path="notices/edit/:id" element={<CreateNotice />} />
         <Route path="events" element={<AdminEvents />} />
         <Route path="events/create" element={<CreateEvent />} />
+        <Route path="seed" element={<AdminSeed />} />
       </Route>
     </Routes>
   );

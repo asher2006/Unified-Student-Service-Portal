@@ -8,7 +8,7 @@ export default function NoticeCard({ notice, onEdit, onDelete }) {
     <div style={{
       background: 'var(--bg)',
       border: '1px solid var(--border)',
-      padding: '24px',
+      padding: '20px 24px',
       transition: 'border-color 0.2s',
     }}
       onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--border-dark)'}

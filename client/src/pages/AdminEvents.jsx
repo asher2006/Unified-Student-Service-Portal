@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getEvents, deleteEvent } from '../services/eventService';
 import EventCard from '../components/EventCard';
+import Button from '../components/ui/Button';
 import { Link } from 'react-router-dom';
-import Badge from '../components/ui/Badge';
+import { Plus } from 'lucide-react';
 
 export default function AdminEvents() {
   const [events, setEvents] = useState([]);
@@ -25,42 +26,52 @@ export default function AdminEvents() {
     }
   };
 
-  if (loading) return <div>Loading events...</div>;
+  if (loading) return (
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: 300, fontFamily: 'var(--font-display)', fontSize: 18, color: 'var(--text-muted)', fontStyle: 'italic' }}>
+      Loading events...
+    </div>
+  );
 
   return (
-    <div style={{ display: 'flex', flexDirection: 'column', gap: 32 }}>
-      <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', borderBottom: '3px solid var(--border-dark)', paddingBottom: 24 }}>
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 32, fontFamily: 'var(--font-ui)' }}>
+
+      {/* Header */}
+      <header style={{ borderBottom: '3px solid var(--border-dark)', paddingBottom: 24, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 16 }}>
         <div>
-          <div className="editorial-label-accent" style={{ marginBottom: 8 }}>Management Console</div>
-          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 36, fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1 }}>
-            Events.
+          <div className="editorial-label-accent" style={{ marginBottom: 8 }}>Admin · Events</div>
+          <h1 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(28px, 4vw, 44px)', fontWeight: 900, color: 'var(--text-primary)', lineHeight: 1, letterSpacing: '-0.03em' }}>
+            Event Management
           </h1>
+          <p style={{ marginTop: 8, fontSize: 14, color: 'var(--text-muted)', fontFamily: 'var(--font-body)', fontStyle: 'italic' }}>
+            Publish and manage campus events for students.
+          </p>
         </div>
-        <Link to="/admin/events/create" style={{
-          padding: '12px 24px', background: 'var(--text-primary)', color: 'var(--text-invert)',
-          border: 'none', fontFamily: 'var(--font-ui)', fontSize: 12, fontWeight: 700,
-          letterSpacing: '0.1em', textTransform: 'uppercase', cursor: 'pointer',
-          textDecoration: 'none'
-        }}>
-          + Add New Event
+        <Link to="/admin/events/create" style={{ textDecoration: 'none' }}>
+          <Button variant="primary" icon={<Plus size={16} />}>
+            New Event
+          </Button>
         </Link>
       </header>
 
-      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(350px, 1fr))', gap: 24 }}>
-        {events.map(event => (
-          <EventCard 
-            key={event.id} 
-            event={event} 
-            isAdmin={true} 
-            onDelete={handleDelete} 
-          />
-        ))}
-        {events.length === 0 && (
-          <div style={{ gridColumn: '1/-1', padding: '48px', textAlign: 'center', border: '1px solid var(--border)', fontStyle: 'italic', color: 'var(--text-muted)' }}>
-            No events found. Start by creating one.
-          </div>
-        )}
-      </div>
+      {events.length === 0 ? (
+        <div style={{ padding: '64px 24px', textAlign: 'center', border: '1px solid var(--border)', background: 'var(--bg-card)', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 20 }}>
+          <p style={{ fontFamily: 'var(--font-display)', fontSize: 20, fontStyle: 'italic', color: 'var(--text-muted)' }}>No events found.</p>
+          <Link to="/admin/events/create" style={{ textDecoration: 'none' }}>
+            <Button variant="secondary">Create the first event →</Button>
+          </Link>
+        </div>
+      ) : (
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(320px, 1fr))', gap: 20 }}>
+          {events.map(event => (
+            <EventCard
+              key={event.id}
+              event={event}
+              isAdmin={true}
+              onDelete={handleDelete}
+            />
+          ))}
+        </div>
+      )}
     </div>
   );
 }

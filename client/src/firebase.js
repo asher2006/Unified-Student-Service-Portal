@@ -1,5 +1,6 @@
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
+import { getAuth } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey:            import.meta.env.VITE_FIREBASE_API_KEY,
@@ -12,7 +13,5 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 
-// getFirestore() with no second arg uses the default "(default)" database.
-// Make sure you have created a Firestore database in your Firebase Console:
-// Firebase Console → Firestore Database → Create database
 export const db = getFirestore(app);
+export const auth = getAuth(app);
